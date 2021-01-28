@@ -22,6 +22,10 @@ fn reverse_polish(tokens: &mut Vec<&str>) -> i32 {
 
             let result = match token {
                 "+" => lhs + rhs,
+                "-" => lhs - rhs,
+                "*" => lhs * rhs,
+                "/" => lhs / rhs,
+                "%" => lhs % rhs,
                 _ => panic!(),
             };
             stack.push(result);
@@ -43,5 +47,29 @@ mod tests {
         let mut v: Vec<&str> = vec!["1", "2", "+"];
         v.reverse();
         assert_eq!(reverse_polish(&mut v), 3)
+    }
+    #[test]
+    fn test_sub() {
+        let mut v: Vec<&str> = vec!["1", "2", "-"];
+        v.reverse();
+        assert_eq!(reverse_polish(&mut v), -1)
+    }
+    #[test]
+    fn test_mul() {
+        let mut v: Vec<&str> = vec!["1", "2", "*"];
+        v.reverse();
+        assert_eq!(reverse_polish(&mut v), 2)
+    }
+    #[test]
+    fn test_div() {
+        let mut v: Vec<&str> = vec!["5", "2", "/"];
+        v.reverse();
+        assert_eq!(reverse_polish(&mut v), 2)
+    }
+    #[test]
+    fn test_mod() {
+        let mut v: Vec<&str> = vec!["3", "2", "%"];
+        v.reverse();
+        assert_eq!(reverse_polish(&mut v), 1)
     }
 }
