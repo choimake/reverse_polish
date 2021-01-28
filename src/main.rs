@@ -11,6 +11,8 @@ fn main() {
 }
 
 fn reverse_polish(tokens: &mut Vec<&str>) -> i32 {
+    tokens.reverse();
+
     let mut stack: Vec<i32> = Vec::new();
 
     while let Some(token) = tokens.pop() {
@@ -45,31 +47,26 @@ mod tests {
     #[test]
     fn test_add() {
         let mut v: Vec<&str> = vec!["1", "2", "+"];
-        v.reverse();
         assert_eq!(reverse_polish(&mut v), 3)
     }
     #[test]
     fn test_sub() {
         let mut v: Vec<&str> = vec!["1", "2", "-"];
-        v.reverse();
         assert_eq!(reverse_polish(&mut v), -1)
     }
     #[test]
     fn test_mul() {
         let mut v: Vec<&str> = vec!["1", "2", "*"];
-        v.reverse();
         assert_eq!(reverse_polish(&mut v), 2)
     }
     #[test]
     fn test_div() {
         let mut v: Vec<&str> = vec!["5", "2", "/"];
-        v.reverse();
         assert_eq!(reverse_polish(&mut v), 2)
     }
     #[test]
     fn test_mod() {
         let mut v: Vec<&str> = vec!["3", "2", "%"];
-        v.reverse();
         assert_eq!(reverse_polish(&mut v), 1)
     }
 }
