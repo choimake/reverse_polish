@@ -69,4 +69,11 @@ mod tests {
         let mut v: Vec<&str> = vec!["3", "2", "%"];
         assert_eq!(reverse_polish(&mut v), 1)
     }
+
+    #[test]
+    #[should_panic]
+    fn test_invalid_operator() {
+        let mut v: Vec<&str> = vec!["1", "1", "_"];
+        assert_eq!(reverse_polish(&mut v), 1)
+    }
 }
