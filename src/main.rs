@@ -34,7 +34,7 @@ fn reverse_polish(tokens: &mut Vec<&str>) -> i32 {
                 "*" => lhs * rhs,
                 "/" => lhs / rhs,
                 "%" => lhs % rhs,
-                _ => panic!(),
+                _ => panic!("invalid operator at {}", pos),
             };
             stack.push(result);
         }
