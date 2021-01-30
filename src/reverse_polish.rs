@@ -1,3 +1,9 @@
+/// Return the value calculated in reverse polish.
+///
+/// # Arguments
+///
+/// * `tokens` - calculation formula
+///
 pub fn eval(tokens: &mut Vec<&str>) -> i32 {
     tokens.reverse();
 
