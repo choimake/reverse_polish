@@ -36,7 +36,7 @@ pub fn eval(tokens: &mut Vec<&str>) -> i32 {
     if stack.len() == 1 {
         stack[0]
     } else {
-        panic!()
+        panic!("invalid syntax")
     }
 }
 
@@ -81,6 +81,13 @@ mod tests {
     #[should_panic]
     fn test_fail_to_unwrap_value() {
         let mut v: Vec<&str> = vec!["a", "1", "+"];
+        assert_eq!(eval(&mut v), 1)
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_invalid_calculation_formula() {
+        let mut v: Vec<&str> = vec!["1", "3"];
         assert_eq!(eval(&mut v), 1)
     }
 }
