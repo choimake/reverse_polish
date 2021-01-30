@@ -14,13 +14,19 @@ fn reverse_polish(tokens: &mut Vec<&str>) -> i32 {
     tokens.reverse();
 
     let mut stack: Vec<i32> = Vec::new();
+    let mut pos = 0;
 
     while let Some(token) = tokens.pop() {
+        pos += 1;
         if let Ok(v) = token.parse::<i32>() {
             stack.push(v);
         } else {
-            let rhs = stack.pop().unwrap();
-            let lhs = stack.pop().unwrap();
+            let rhs = stack
+                .pop()
+                .unwrap_or_else(|| panic!("invalid syntax at {}", pos));
+            let lhs = stack
+                .pop()
+                .unwrap_or_else(|| panic!("invalid syntax at {}", pos));
 
             let result = match token {
                 "+" => lhs + rhs,
@@ -74,6 +80,13 @@ mod tests {
     #[should_panic]
     fn test_invalid_operator() {
         let mut v: Vec<&str> = vec!["1", "1", "_"];
+        assert_eq!(reverse_polish(&mut v), 1)
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_fail_to_unwrap_value() {
+        let mut v: Vec<&str> = vec!["a", "1", "+"];
         assert_eq!(reverse_polish(&mut v), 1)
     }
 }
