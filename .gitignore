@@ -13,3 +13,5 @@ Cargo.lock
 **/*.rs.bk
 
 
+# for input formula
+input.txt
