@@ -2,6 +2,7 @@
 // - 演算子は + - * / %
 // - 数値は32bit整数
 
+use anyhow::Result;
 use clap::Clap;
 use std::fs::File;
 use std::io::{stdin, BufRead, BufReader};
@@ -28,7 +29,7 @@ struct Opts {
 // 外部モジュールの読み込みの際には、modを使う
 mod reverse_polish;
 
-fn main() {
+fn main() -> Result<()> {
     // 引数を受け取る
     let opts = Opts::parse();
 
@@ -36,21 +37,24 @@ fn main() {
     if let Some(path) = opts.formula_file {
         let f = File::open(path).unwrap();
         let reader = BufReader::new(f);
-        run(reader, opts.verbose);
+        run(reader, opts.verbose)
     } else {
         // 標準入力
         let stdin = stdin();
         let reader = stdin.lock();
-        run(reader, opts.verbose);
+        run(reader, opts.verbose)
     }
 }
 
-fn run<R: BufRead>(reader: R, _verbose: bool) {
+fn run<R: BufRead>(reader: R, _verbose: bool) -> Result<()> {
     for line in reader.lines() {
-        let line = line.unwrap();
-        println!("{}", line);
+        let line = line?;
         // 計算
-        let result = reverse_polish::eval(&line);
-        println!("calculation result is {}", result);
+        match reverse_polish::eval(&line) {
+            Ok(result) => println!("calculation result is {}", result),
+            Err(e) => eprintln!("{:#?}", e),
+        }
     }
+
+    Ok(())
 }
