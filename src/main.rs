@@ -6,6 +6,7 @@ use anyhow::Result;
 use clap::Clap;
 use std::fs::File;
 use std::io::{stdin, BufRead, BufReader};
+use std::path::PathBuf;
 
 // deriveは「引き出す」という意味
 // この場合は、Clapの処理をOpsに継承している
@@ -24,7 +25,7 @@ struct Opts {
 
     /// Formulas written in RPN
     #[clap(name = "FILE")]
-    formula_file: Option<String>,
+    formula_file: Option<PathBuf>,
 }
 // 外部モジュールの読み込みの際には、modを使う
 mod reverse_polish;
